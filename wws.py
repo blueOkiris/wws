@@ -9,7 +9,6 @@ import time
 
 # ---------- Icon Stuff ----------
 
-
 def on_change_desktop_clicked(icon, item):
     VirtualDesktop(number = int(icon.name)).go()
 
@@ -60,6 +59,7 @@ def desktops_make_enough(desktops):
 # ---------- Main ----------
 
 SHOULD_CLOSE = False
+STARTUP_DELAY = 0.5
 
 def load_images():
     sel_imgs = []
@@ -77,6 +77,7 @@ def load_images():
 
 def main():
     global SHOULD_CLOSE
+    global STARTUP_DELAY
 
     (sel_imgs, desel_imgs) = load_images()
     
@@ -90,7 +91,7 @@ def main():
         thread = Thread(target = icons[i].run)
         threads.append(thread)
         thread.start()
-        time.sleep(0.2)
+        time.sleep(STARTUP_DELAY)
 
     last_cur_num = -1
     while not SHOULD_CLOSE:
