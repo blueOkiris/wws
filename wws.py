@@ -38,20 +38,24 @@ def desktops_get_all():
     return [ (vd.number - 1, vd) for vd in pyvda.get_virtual_desktops() ]
 
 def desktops_remove_extra(desktops):
-    if len(desktops) > 10:
+    global NUM_DESKTOPS
+
+    if len(desktops) > NUM_DESKTOPS:
         print('Warning: WWS only works with exactly 10 desktops, but you have more. Closing extra')
-        for i in range(len(desktops) - 10):
+        for i in range(len(desktops) - NUM_DESKTOPS):
             print(f'> Closing desktop {i + 10}...')
-            for (n, vd) in filter(lambda desktop: desktop[0] == i + 10, desktops):
+            for (n, vd) in filter(lambda desktop: desktop[0] == i + NUM_DESKTOPS, desktops):
                 vd.remove()
-    return list(filter(lambda desktop: desktop[0] < 10, desktops))
+    return list(filter(lambda desktop: desktop[0] < NUM_DESKTOPS, desktops))
 
 def desktops_make_enough(desktops):
+    global NUM_DESKTOPS
+
     new_desktops = desktops.copy()
-    if len(desktops) < 10:
+    if len(desktops) < NUM_DESKTOPS: 
         print('Warning: WWS only works with exactly 10 desktops, and you have too few. Creating')
         old_len = len(desktops)
-        for i in range(10 - old_len):
+        for i in range(NUM_DESKTOPS - old_len):
             print(f'> Creating desktop {i + old_len}')
             new_desktops.append(VirtualDesktop.create())
     return new_desktops
@@ -60,7 +64,9 @@ def desktops_make_enough(desktops):
 
 SHOULD_CLOSE = False
 STARTUP_DELAY = 1.0
+NUM_DESKTOPS = 9        # Must be less than or equal to 10 bc I only have 10 pictures :)
 
+# Always gets all 10
 def load_images():
     sel_imgs = []
     desel_imgs = []
@@ -78,6 +84,7 @@ def load_images():
 def main():
     global SHOULD_CLOSE
     global STARTUP_DELAY
+    global NUM_DESKTOPS
 
     (sel_imgs, desel_imgs) = load_images()
     
@@ -85,9 +92,11 @@ def main():
     desktops = desktops_remove_extra(desktops)
     desktops = desktops_make_enough(desktops)
 
-    icons = [ icon_create(i, desel_imgs[i]) for i in range(10) ]
+    icons = [ icon_create(i, desel_imgs[i]) for i in range(NUM_DESKTOPS) ]
     threads = []
-    for i in [ 0, 9, 8, 7, 6, 5, 4, 3, 2, 1 ]: # They don't show up in the correct order otherwise
+    spawn_order = list(range(NUM_DESKTOPS)[-1:0:-1])
+    spawn_order.insert(0, 0)
+    for i in spawn_order: # They don't show up in the correct order otherwise
         thread = Thread(target = icons[i].run)
         threads.append(thread)
         thread.start()
