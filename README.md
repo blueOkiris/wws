@@ -14,9 +14,13 @@ You can click on them to select a workspace, it automatically sets workspaces to
 
 Requirements:
 
-- Python 3
+- Python 3 (I use Microsoft Store version)
 
-Run `start.bat` to install everything and start the program.
+Download repo and place somewhere like `C:\wws` or on your Desktop or in Program Files.
+
+To launch manually, go to the folder and double click `start.vbs`. This will silently call `run.bat` which will (the first time) set up a local Python virtual environment with all dependencies and then launch the program in the background.
+
+To launch automatically at startup, create a shortcut to `start.vbs` and place it in the "Startup" folder in Explorer (`C:\Users\<your-name>\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`).
 
 To kill, right click an indicator and click "Exit"
 
