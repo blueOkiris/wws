@@ -2,13 +2,15 @@
 
 ## Description
 
-A set of 10 status tray icons for clicking between virtual desktops and knowing which you're on.
+A set of 9 status tray icons for clicking between virtual desktops and knowing which you're on.
 
 Windows has virtual desktops, but I want to use them like i3 or a Linux DE where I can see which workspace I'm in and click between them. Useful in conjunction with FancyWM
 
 ![img](./img/screenshot.png)
 
-You can click on them to select a workspace, it automatically sets workspaces to 10, and when you move desktops whether by clicking or with the keyboard or with some other way, they update to show the correct current desktop.
+You can click on them to select a workspace, it automatically sets workspaces to 9, and when you move desktops whether by clicking or with the keyboard or with some other way, they update to show the correct current desktop.
+
+Why 9? On many tiling WMs like i3 or Hyprland, there is a workspace corresponding to each number key. Indeed this is how FancyWM is set up to work. However, while the Linux ones go 1-10 with 0 being 10, FancyWM only goes 1-9, so I draw 9, bc I intend this to work with FancyWM.
 
 ## Run
 
