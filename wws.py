@@ -59,7 +59,7 @@ def desktops_make_enough(desktops):
 # ---------- Main ----------
 
 SHOULD_CLOSE = False
-STARTUP_DELAY = 0.5
+STARTUP_DELAY = 1.0
 
 def load_images():
     sel_imgs = []
@@ -91,7 +91,7 @@ def main():
         thread = Thread(target = icons[i].run)
         threads.append(thread)
         thread.start()
-        time.sleep(STARTUP_DELAY)
+        time.sleep(STARTUP_DELAY) # Also needed for delay
 
     last_cur_num = -1
     while not SHOULD_CLOSE:
